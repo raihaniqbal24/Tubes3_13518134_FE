@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react"
 
   
-export const ChatInput = () => {
+export const Chat = ({current ,updater}) => {
     // set initial state
-    const [chatList, setChatList] = useState([
-        {id:1, text:"I'm the bot", user:false}
-    ]);
+    const [chatList, setChatList] = useState([]);
     const [textValue, setTextValue] = useState("");
+
+    useEffect(() => {
+        setChatList(current)
+    }, [current]);
    
     const handleInputText = (e) => {
         setTextValue(e.target.value);
@@ -17,10 +19,12 @@ export const ChatInput = () => {
 
         // insert user chat
         const newChat = {id:chatList.length + 1, text:textValue, user:true};
+        updater(newChat, current.index);
 
         // insert bot response
         const botResponseChat = {id:chatList.length + 1, text:"response " + (Math.ceil(chatList.length/2)), user:false};
-        setChatList([...chatList, newChat, botResponseChat]);
+        updater(botResponseChat);
+        // setChatList([...chatList, newChat, botResponseChat]);
         
         setTextValue("");
     }
@@ -48,15 +52,3 @@ export const ChatInput = () => {
       </>
     );
 }
-
-// export const ChatOutput = () => {
-//     return(
-//         <div>
-//             <ul>
-//             {botChat.slice(0).reverse().map((botChat) => ( // reverse the order of the array
-//             <li key={todo.id}>{todo.text}</li>
-//             ))}
-//         </ul>
-//       </div>
-//     )
-// }
