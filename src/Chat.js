@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-
+import './Chat.css'
   
 export const Chat = ({current ,updater}) => {
     // set initial state
@@ -47,7 +47,7 @@ export const Chat = ({current ,updater}) => {
             onChange={handleInputText}
           />
         </label>
-        <button type="submit">send</button>
+        <button className="send-button" type="submit">send</button>
       </form>
       </>
     );

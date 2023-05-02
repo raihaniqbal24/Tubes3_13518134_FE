@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {Chat} from './Chat.js';
+import './App.css'
 
 
 const App = () => {
@@ -42,12 +43,15 @@ const App = () => {
   const Sidebar = () => {
     return(
       <div className="sidebar">
+        <ul className="sidebar-container">
           {sidebarComp.map((component) => (
-            <p 
+            <li 
+            className="sidebar-comp"
             key={component.index} 
             onClick={() => setCurrent({chatList:history[component.index], index:component.index})}
-            >{component.text}</p>
+            >{component.text}</li>
           ))}
+          </ul>
           <button type="button" onClick={handleNewChat}>new chat</button>
       </div>
     )
@@ -61,10 +65,12 @@ const App = () => {
         <h1>chadGPT</h1>
       </div>
       <Sidebar />
+      <div className="content">
       
       <Chat current={current.chatList} updater={updateHistory}/>
       { console.log("this is history")}
       { console.log(history)}
+      </div>
     </div>
   );
 }
