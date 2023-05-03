@@ -38,6 +38,8 @@ const App = () => {
 
     setHistory([...history, newHistory]);
     setSidebarComp([...sidebarComp, newSidebarComp]);
+
+    setCurrent({chatList: newHistory, index:(history.length)})
   }
 
   const Sidebar = () => {
@@ -52,7 +54,7 @@ const App = () => {
             >{component.text}</li>
           ))}
           </ul>
-          <button type="button" onClick={handleNewChat}>new chat</button>
+          <button className="button-new" type="button" onClick={handleNewChat}>new chat</button>
       </div>
     )
   }
@@ -68,8 +70,6 @@ const App = () => {
       <div className="content">
       
       <Chat current={current.chatList} updater={updateHistory}/>
-      { console.log("this is history")}
-      { console.log(history)}
       </div>
     </div>
   );
