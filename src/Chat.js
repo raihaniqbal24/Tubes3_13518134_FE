@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react"
+import useApi from "./useApi";
+import {addUpdateQuestionService, askQuestionService, deleteQuestionService} from './chadgpt.service';
 import './Chat.css'
   
 export const Chat = ({current ,updater}) => {
@@ -7,7 +9,28 @@ export const Chat = ({current ,updater}) => {
     const [chatList, setChatList] = useState([]);
     const [textValue, setTextValue] = useState("");
     const [algoChoice, setAlgoChoice] = useState("kmp");
+    const [answer, setAnswer] = useState(null);
     console.log(algoChoice);
+
+    const addUpdateQuestion = useApi(addUpdateQuestionService);
+    const askQuestion = useApi(askQuestionService);
+    const deleteQuestion = useApi(deleteQuestionService);
+
+    const getAnswer = (qst) => {
+      const reqBody = {
+        question: qst,
+        algo: algoChoice,
+      };
+      console.log(reqBody);
+      askQuestion.request(reqBody);
+    }
+
+    useEffect(() => {
+      if (askQuestion.data) {
+        setAnswer(askQuestion.data);
+        console.log(askQuestion.data);
+      }
+    }, [askQuestion.data])
 
     useEffect(() => {
         setChatList(current)
@@ -38,8 +61,10 @@ export const Chat = ({current ,updater}) => {
         const newChat = {id:chatList.length + 1, text:textValue, user:true};
         updater(newChat, current.index);
 
+        getAnswer(textValue);
+
         // insert bot response
-        const botResponseChat = {id:chatList.length + 1, text:"response " + (Math.ceil(chatList.length/2)), user:false};
+        const botResponseChat = {id:chatList.length + 1, text: answer, user:false};
         updater(botResponseChat);
         // setChatList([...chatList, newChat, botResponseChat]);
         
