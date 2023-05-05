@@ -1,7 +1,7 @@
 import api from './api.service';
 
-export const askQuestionService = (reqBody, opts = {}) => {
-  return api.get('/chadgpt/ask', reqBody, opts);
+export const askQuestionService = (qst, algo, opts = {}) => {
+  return api.get(`/chadgpt/ask/${algo}/${qst}`, opts);
 };
 
 export const addUpdateQuestionService = (reqBody, opts = {}) => {

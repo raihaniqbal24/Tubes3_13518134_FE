@@ -17,17 +17,12 @@ export const Chat = ({current ,updater}) => {
     const deleteQuestion = useApi(deleteQuestionService);
 
     const getAnswer = (qst) => {
-      const reqBody = {
-        question: qst,
-        algo: algoChoice,
-      };
-      console.log(reqBody);
-      askQuestion.request(reqBody);
+      askQuestion.request(qst, algoChoice);
     }
 
     useEffect(() => {
       if (askQuestion.data) {
-        setAnswer(askQuestion.data);
+        setAnswer(askQuestion.data.answer);
         console.log(askQuestion.data);
       }
     }, [askQuestion.data])
