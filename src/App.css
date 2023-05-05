@@ -48,6 +48,7 @@
   font-weight: 600;
   color: white;
   cursor: pointer;
+  word-wrap: break-word;
 }
 
 .sidebar-comp {

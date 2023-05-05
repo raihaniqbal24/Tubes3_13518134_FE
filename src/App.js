@@ -23,12 +23,22 @@ const App = () => {
 
   const [current, setCurrent] = useState({chatList:history[0], index:0});
 
+  const updateSidebar = (name) => {
+    const renamingComp = sidebarComp[current.index];
+    renamingComp.text = name;
+
+    setSidebarComp(sidebarComp);
+  }
+
   const updateHistory = (chat) => {
     const newHistoryList = [...history];
     const newHistory = newHistoryList[current.index];
 
     newHistory.push(chat);
-
+    if(chat.user){
+      updateSidebar(chat.text);
+    }
+  
     setHistory(newHistoryList)
   }
 
